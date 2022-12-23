@@ -1,0 +1,15 @@
+.nav-btn {
+  background-color: #12b48b;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 2px;
+  transition: all 0.4s;
+}
+.nav-btn:hover {
+  background-color: #204066;
+}
+@media screen and (max-width: 600px) {
+  .nav-btn {
+    padding: 10px;
+  }
+}
