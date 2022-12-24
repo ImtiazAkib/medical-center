@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
 import "./Home.css";
 
 const Home = () => {
   return (
     <div>
-      <Navbar />
       <header>
         <div
           className="hero min-h-screen"

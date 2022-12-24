@@ -1,8 +1,15 @@
+import { signOut } from "firebase/auth";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
+import auth from "../Firebase/firebase.init";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const logOut = () => {
+    signOut(auth);
+  };
+  const [user] = useAuthState(auth);
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -30,13 +37,22 @@ const Navbar = () => {
             <li>
               <Link to="/home">Home</Link>
             </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
 
-            <li>
-              <Link to="/sign-up">Sign Up</Link>
-            </li>
+            {user ? (
+              <li>
+                <button
+                  className="px-4 bg-slate-700 text-white"
+                  onClick={() => logOut()}
+                >
+                  Logout ({user?.email})
+                </button>
+              </li>
+            ) : (
+              <li>
+                <Link to="/register">Sign Up</Link>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
           </ul>
         </div>
         <Link className="btn btn-ghost normal-case text-xl">
@@ -48,13 +64,22 @@ const Navbar = () => {
           <li>
             <Link to="/home">Home</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
 
-          <li>
-            <Link to="/sign-up">Sign Up</Link>
-          </li>
+          {user ? (
+            <li>
+              <button
+                className="px-4 bg-slate-700 text-white"
+                onClick={() => logOut()}
+              >
+                Logout ({user?.email})
+              </button>
+            </li>
+          ) : (
+            <li>
+              <Link to="/register">Sign Up</Link>
+              <Link to="/login">Login</Link>
+            </li>
+          )}
         </ul>
       </div>
       <div className="navbar-end">

@@ -1,0 +1,53 @@
+.social-auth button span{
+    display: block;
+    padding: 0px 8px;
+}
+.social-auth button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    margin-left: 10px;
+    width: 260px;
+    height: 40px;
+    padding: 30px 0px;
+    border-radius: 5px;
+    transition: var(--transition);
+}
+.social-auth button:hover{
+    box-shadow: var(--dark-shadow);
+}
+.social-auth-icon{
+    font-size: 25px;
+}
+.social-google-icon{
+    background-color: rgba(151, 151, 164, 0.195);
+}
+.social-facebook-icon{
+    background-color: rgba(151, 151, 164, 0.195);
+}
+@media screen and (max-width:630px) {
+    .social-auth button{
+        width: 180px;
+        padding: 25px 0px;
+        font-size: 15px;
+    }
+    
+}
+@media screen and (max-width:400px) {
+    .social-auth button{
+        width: 160px;
+        padding: 25px 0px;
+        font-size: 15px;
+    }
+    .social-auth button span{
+        padding: 0px 4px;
+    }
+}
+@media (min-width:1024px) and (max-width:1100px) {
+    .social-auth button{
+        width: 240px;
+        
+    }
+    
+}
