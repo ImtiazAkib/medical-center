@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar/Navbar";
 import VerifyEmail from "./components/VerifyEmail/VerifyEmail";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import BackToHome from "./components/BackToHome/BackToHome";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/projects" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/register" element={<Form />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-email" element={<VerifyEmail />} />

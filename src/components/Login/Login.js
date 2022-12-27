@@ -1,79 +1,112 @@
-import React from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import React from "react";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithFacebook,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from 'react-icons/fc';
-import { ImFacebook2 } from 'react-icons/im';
-import { Link } from 'react-router-dom';
-import auth from '../Firebase/firebase.init';
+import { FcGoogle } from "react-icons/fc";
+import { ImFacebook2 } from "react-icons/im";
+import { Link, useNavigate } from "react-router-dom";
+import auth from "../Firebase/firebase.init";
 import "./Login.css";
 
 const Login = () => {
+  let navigate = useNavigate();
 
-    const [signInWithGoogle] = useSignInWithGoogle(auth);
-    const [signInWithFacebook] = useSignInWithFacebook(auth);
-    const [
-        signInWithEmailAndPassword,
-        loading,
-      ] = useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signInWithFacebook] = useSignInWithFacebook(auth);
+  const [signInWithEmailAndPassword, loading] =
+    useSignInWithEmailAndPassword(auth);
 
-    const { register, formState: { errors }, handleSubmit } = useForm();
-    const onSubmit = data => {   
-        signInWithEmailAndPassword(data.email,data.password)
-        
-    };
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const onSubmit = (data) => {
+    signInWithEmailAndPassword(data.email, data.password);
+    let path = `/dashboard`;
+    navigate(path);
+  };
 
+  return (
+    <div>
+      <div className="form-container grid lg:grid-cols-2 md:grid-cols-1 text-gray-600">
+        <div className="form-left">
+          <div className="form-img">
+            <img
+              src="https://i.ibb.co/VqGCpsd/Mobile-login.jpg"
+              alt="register-background"
+            />
+          </div>
+        </div>
+        <div className="form w-auto flex flex-col justify-center sm:px-10 md:px-20 ">
+          <h2 className="font-bold text-4xl pb-14 text-pink-700 text-center">
+            Login
+          </h2>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <label htmlFor="Email">Email Address</label>
+              <input
+                {...register("email", {
+                  required: "Email is required!!",
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+                    message: "Please enter a valid email",
+                  },
+                })}
+                type="email"
+                required
+              />
+              <div className={`${errors.email ? "pt-2 notValid" : ""}`}>
+                {errors.email?.message}
+              </div>
+            </div>
+            <div>
+              <label htmlFor="Password">Password</label>
+              <input
+                type="password"
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "Password is required!!",
+                  },
+                  minLength: 8,
+                })}
+                required
+              />
+              <div className={`${errors.password ? "pt-2 notValid" : ""}`}>
+                {errors.password?.message}
+              </div>
+            </div>
 
-    return (
-        <div>
-            <div className="form-container grid lg:grid-cols-2 md:grid-cols-1 text-gray-600">
-                <div className="form-left">
-                    <div className="form-img">
-                    <img src="https://i.ibb.co/VqGCpsd/Mobile-login.jpg" alt="register-background" />
-                    </div>
-                </div>
-            <div className="form w-auto flex flex-col justify-center sm:px-10 md:px-20 ">
-                <h2 className="font-bold text-4xl pb-14 text-pink-700 text-center">Login</h2>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label htmlFor="Email">Email Address</label>
-                    <input
-                    {...register('email', {
-                        required: 'Email is required!!',
-                        pattern: {
-                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                    message: 'Please enter a valid email',
-                },
-            })}
-            type="email"
-            required
-        />
-                    <div className={`${errors.email ? 'pt-2 notValid' : ''}`}>{errors.email?.message}</div>
-                </div>
-                <div>
-                    <label htmlFor="Password">Password</label>
-                    <input type="password" {...register("password", { required: {
-                        value:true,
-                        message:"Password is required!!"
+            <div className="flex justify-between items-center flex-row h-6 mt-6">
+              <div className="flex items-center flex-row">
+                <input
+                  type="checkbox"
+                  {...register("acceptTerms", {
+                    required: {
+                      value: false,
+                      message: "Accept the terms",
                     },
-                    minLength: 8 })} required />
-                    <div className={`${errors.password ? 'pt-2 notValid' : ''}`}>{errors.password?.message}</div>
-                </div>
-            
-                <div className="flex justify-between items-center flex-row h-6 mt-6">
-                    <div className="flex items-center flex-row">
-                        <input type="checkbox" {...register("acceptTerms", {required:{
-                            value:false,
-                            message:"Accept the terms"
-                        }, minLength: 8 }) } className="w-4 h-4" />
-                        <label className="pl-2" htmlFor="remember-me">Remember Me</label>
-                        
-                    </div>
-                    <div className={`${errors.acceptTerms ? 'pt-2 notValid' : ''}`}>{errors.acceptTerms?.message}</div>
-                    <div>
-                        <Link to="/forgot-password">Forgot Password?</Link>
-                    </div>
-                </div>
-                {/* { loading &&
+                    minLength: 8,
+                  })}
+                  className="w-4 h-4"
+                />
+                <label className="pl-2" htmlFor="remember-me">
+                  Remember Me
+                </label>
+              </div>
+              <div className={`${errors.acceptTerms ? "pt-2 notValid" : ""}`}>
+                {errors.acceptTerms?.message}
+              </div>
+              <div>
+                <Link to="/forgot-password">Forgot Password?</Link>
+              </div>
+            </div>
+            {/* { loading &&
      
 <div className="block text-center">
     <svg role="status" className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,29 +116,37 @@ const Login = () => {
 </div>
 
   } */}
-                    <button className="submit-btn" onClick={()=>signInWithEmailAndPassword()}>Login</button>
-                </form>
-                <div className='flex justify-around lg:flex-row sm:flex-row md:items-center'>
-                    <div className='social-auth'>    
-                        <button className='social-google-icon' onClick={()=>signInWithGoogle()}>
-                            <span className='social-auth-icon'><FcGoogle/></span>
-                            <span className=''>Google Sign In</span>
-                        </button>
-                    </div>
+            <button
+              className="submit-btn"
+              onClick={() => signInWithEmailAndPassword()}
+            >
+              Login
+            </button>
+          </form>
+          <div className="flex justify-around lg:flex-row sm:flex-row md:items-center">
+            <div className="social-auth">
+              <button
+                className="social-google-icon"
+                onClick={() => signInWithGoogle()}
+              >
+                <span className="social-auth-icon">
+                  <FcGoogle />
+                </span>
+                <span className="">Google Sign In</span>
+              </button>
+            </div>
 
-                    {/* <div className='social-auth'>  
+            {/* <div className='social-auth'>  
                         <button className='social-facebook-icon'>
                             <span className='social-auth-icon'><ImFacebook2/></span>
                             <span className=''>Facebook Sign In</span>
                         </button>
                     </div> */}
-
-            </div>
-            </div>
-            </div>
-            
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Login;
