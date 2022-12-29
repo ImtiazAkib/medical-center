@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import auth from "../Firebase/firebase.init";
+import Report from "../Report/Report";
+import ReportForm from "../ReportForm/ReportForm";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -10,6 +12,7 @@ const Dashboard = () => {
   const [drugs, setDrugs] = useState([]);
   const [users, setUsers] = useState([]);
   const [client, setClient] = useState({});
+
   const [user] = useAuthState(auth);
 
   useEffect(() => {
@@ -25,9 +28,9 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    const client = users.filter((client) => client.email === user.email);
+    const client = users.filter((client) => client?.email === user?.email);
     setClient(client[0]);
-  }, [user]);
+  }, [user, users]);
 
   const onSubmit = (data) => {
     fetch("http://localhost:5000/prescriptions", {
@@ -75,7 +78,16 @@ const Dashboard = () => {
           {...register("time", { required: true })}
           placeholder="Time(0+0+0)"
         />
-        <input className="add-btn" type="submit" value="Add" />
+        {client?.type === "doctor" ? (
+          <input className="add-btn" type="submit" value="Add" />
+        ) : (
+          <input
+            className="add-btn"
+            type="submit"
+            value="Add"
+            disabled={true}
+          />
+        )}
       </form>
 
       <div className="overflow-x-auto">
@@ -117,6 +129,52 @@ const Dashboard = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      <ReportForm />
+      {/* ---report---- */}
+      <div className="report">
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Last 1 Hour Report:</h2>
+            <Report />
+          </div>
+        </div>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Last 2 Hour Report:</h2>
+            <Report />
+          </div>
+        </div>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Last 3 Hour Report:</h2>
+            <Report />
+          </div>
+        </div>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Last 4 Hour Report:</h2>
+            <Report />
+          </div>
+        </div>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Last 5 Hour Report:</h2>
+            <Report />
+          </div>
+        </div>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Last 6 Hour Report:</h2>
+            <Report />
+          </div>
+        </div>
+        <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Last 7 Hour Report:</h2>
+            <Report />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -83,7 +83,9 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <button className="nav-btn">Check Patient Status</button>
+        <Link className="nav-btn" to="/dashboard">
+          Check Patient Status
+        </Link>
       </div>
     </div>
   );
