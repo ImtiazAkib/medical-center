@@ -1,32 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addTemp } from "../../features/patient/patientSlice";
 
-const Report = () => {
-  const [reports, setReports] = useState([]);
+const Report = ({ id }) => {
+  const dispatch = useDispatch();
+  const temp = Math.floor(Math.random() * (110 - 90)) + 90;
   useEffect(() => {
-    fetch("http://localhost:5000/reports")
-      .then((res) => res.json())
-      .then((data) => setReports(data));
+    dispatch(addTemp(temp));
   }, []);
+
   return (
-    <div>
-      {reports.map((report) => (
-        <div key={report._id}>
-          <p>
-            <span className="text-xl">
-              SP0<sub>2</sub>:
-            </span>
-            <span>{report.sp02 ? report.sp02 : 0}</span>
-          </p>
-          <p>
-            <span className="text-xl">Heartbeat:</span>
-            <span>{report.heartbeat ? report.heartbeat : 0}</span>
-          </p>
-          <p>
-            <span className="text-xl">Temperature:</span>
-            <span>{report.temperature ? report.temperature : 0}</span>
-          </p>
+    <div className="card w-96 bg-neutral text-neutral-content">
+      <div className="card-body items-center text-center">
+        <h2 className="card-title">Last {id} Hour Report</h2>
+
+        <div className="card-actions justify-end">
+          <button className="btn btn-ghost">
+            SP0<sub>2</sub>
+          </button>
+          <button className="btn btn-ghost">Temp</button>
+          <button className="btn btn-ghost">BPM</button>
         </div>
-      ))}
+        <div className="card-actions justify-end">
+          <button className="btn btn-ghost">
+            {Math.floor(Math.random() * (100 - 60)) + 60}
+          </button>
+          <button className="btn btn-ghost">{temp}</button>
+          <button className="btn btn-ghost">
+            {Math.floor(Math.random() * (100 - 40)) + 40}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

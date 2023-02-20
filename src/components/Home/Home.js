@@ -14,16 +14,16 @@ const Home = () => {
         >
           <div className="hero-overlay bg-transparent"></div>
           <div className="hero-content justify-start  text-neutral-content">
-            <div className="max-w-lg">
+            <div className="first-content">
               <h1
                 className="mb-5 md:text-5xl font-bold"
                 style={{ color: "#204066" }}
               >
-                Lorem ipsum dolor sit amet
+                Healing Lives & Saving Futures
               </h1>
               <p className="mb-5 text-gray-700">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem quasi
+                Experience the Difference: Compassionate and Personalized
+                Medical Services
               </p>
               <button className="contact-btn">Contact Us +</button>
             </div>
@@ -32,39 +32,42 @@ const Home = () => {
       </header>
       {/* card section */}
       <section className="cards">
-        <div className="card">
+        <div className="my-card">
           <h1 className="text-2xl" style={{ color: "#204066" }}>
-            Operation Theatre
+            Doctor or Specialist
           </h1>
           <div>
             <img src="/image/icon1.png" alt="" />
           </div>
           <p className="text-gray-500">
-            All the Lorem Ipsum generators on the Internet tend to repeat prede.
+            There are many different types of operations, depending on the
+            condition being treated and the part of the body that is affected.
           </p>
           <Link>Read More +</Link>
         </div>
-        <div className="card">
+        <div className="my-card">
           <h1 className="text-2xl" style={{ color: "#204066" }}>
-            Operation Theatre
+            Anesthesia
           </h1>
           <div>
             <img src="/image/icon3.png" alt="" />
           </div>
           <p className="text-gray-500">
-            All the Lorem Ipsum generators on the Internet tend to repeat prede.
+            In most operations, the patient is given anesthesia to prevent pain
+            and discomfort during the procedure
           </p>
           <Link>Read More +</Link>
         </div>
-        <div className="card">
+        <div className="my-card">
           <h1 className="text-2xl" style={{ color: "#204066" }}>
-            Operation Theatre
+            Team
           </h1>
           <div>
             <img src="/image/icon2.png" alt="" />
           </div>
           <p className="text-gray-500">
-            All the Lorem Ipsum generators on the Internet tend to repeat prede.
+            Operations are typically performed by a team of medical
+            professionals, including a surgeon, anesthesiologist, and nurses
           </p>
           <Link>Read More +</Link>
         </div>
@@ -84,15 +87,27 @@ const Home = () => {
               Life Is All About Your Vision In World
             </h1>
             <p className="text-gray-500">
-              All the Lorem Ipsum generators on the Internet tend to repeat
-              predefined chunks as necessary, making this the first true
-              generator on the Internet.
+              The eye is a complex organ that is responsible for detecting and
+              processing visual information. It consists of several structures,
+              including the cornea, iris, lens, retina, and optic nerve.
             </p>
             <ul className="text-gray-500">
-              <li>Lorem ipsum dolor sit amet, conse adipiscing elit.</li>
-              <li>Lorem ipsum dolor sit amet, conse adipiscing elit.</li>
-              <li>Lorem ipsum dolor sit amet, conse adipiscing elit.</li>
-              <li>Lorem ipsum dolor sit amet, conse adipiscing elit.</li>
+              <li>
+                Your Health is Our Priority: Comprehensive Medical Care for the
+                Whole Family
+              </li>
+              <li>
+                Experience the Difference: Compassionate and Personalized
+                Medical Services
+              </li>
+              <li>
+                Your Journey to Health and Wellness Starts Here: Holistic and
+                Integrative Medical Care
+              </li>
+              <li>
+                Trust the Experts: Highly-Skilled and Experienced Medical
+                Professionals at Your Service
+              </li>
             </ul>
             <div className="leading-5 mt-3">
               <button className="contact-btn">Contact Us +</button>

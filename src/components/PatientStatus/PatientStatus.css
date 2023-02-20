@@ -1,0 +1,48 @@
+.prescription-form {
+  margin: 80px 150px;
+}
+.prescription-form input {
+  padding: 5px 150px 5px 15px;
+  border-radius: 3px;
+  margin-left: 5px;
+  border: 1px solid rgb(206, 204, 204);
+  font-size: 14px;
+  line-height: 30px;
+}
+.prescription-form input:focus {
+  border-bottom: 1px solid var(--clr-red-dark);
+  outline: none;
+  box-shadow: var(--dark-shadow);
+  transition: var(--transition);
+}
+.prescription-form .add-btn {
+  background-color: var(--clr-red-dark);
+  border: 1px solid var(--clr-red-dark);
+  color: #fff;
+  border-radius: 5px;
+  transition: var(--transition);
+}
+.prescription-form .add-btn:hover {
+  background-color: rgb(230, 23, 23);
+  transition: var(--transition);
+}
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: 100px 20px 0px;
+}
+.status div {
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 630px) {
+  .prescription-form {
+    margin: 50px 0px 50px 10px;
+  }
+  .prescription-form input {
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+}

@@ -1,15 +1,24 @@
 import { signOut } from "firebase/auth";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import auth from "../Firebase/firebase.init";
 import "./Navbar.css";
+import { getId } from "../../features/patient/patientSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const { patientUsers } = useSelector((store) => store.patient);
+
   const logOut = () => {
     signOut(auth);
   };
+
   const [user] = useAuthState(auth);
+
+  const check = patientUsers.find((patient) => patient.email === user?.email);
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -53,9 +62,14 @@ const Navbar = () => {
                 <Link to="/login">Login</Link>
               </li>
             )}
+            {check && (
+              <li>
+                <Link to="/status">Status</Link>
+              </li>
+            )}
           </ul>
         </div>
-        <Link className="btn btn-ghost normal-case text-xl">
+        <Link className="btn btn-ghost normal-case text-xl" to="/home">
           <img width="120px" src="/logo.png" alt="" />
         </Link>
       </div>
@@ -76,15 +90,22 @@ const Navbar = () => {
             </li>
           ) : (
             <li>
-              <Link to="/register">Sign Up</Link>
+              <Link to="/register" onClick={() => dispatch(getId())}>
+                Sign Up
+              </Link>
               <Link to="/login">Login</Link>
+            </li>
+          )}
+          {check && (
+            <li>
+              <Link to="/status">Status</Link>
             </li>
           )}
         </ul>
       </div>
       <div className="navbar-end">
         <Link className="nav-btn" to="/dashboard">
-          Check Patient Status
+          Dashboard
         </Link>
       </div>
     </div>

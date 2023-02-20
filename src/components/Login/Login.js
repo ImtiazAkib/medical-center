@@ -1,23 +1,22 @@
 import React from "react";
 import {
   useSignInWithEmailAndPassword,
-  useSignInWithFacebook,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { ImFacebook2 } from "react-icons/im";
+
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../Firebase/firebase.init";
 import "./Login.css";
 
 const Login = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const from = "/";
 
   const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [signInWithFacebook] = useSignInWithFacebook(auth);
-  const [signInWithEmailAndPassword, loading] =
-    useSignInWithEmailAndPassword(auth);
+
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
   const {
     register,
@@ -26,8 +25,7 @@ const Login = () => {
   } = useForm();
   const onSubmit = (data) => {
     signInWithEmailAndPassword(data.email, data.password);
-    let path = `/dashboard`;
-    navigate(path);
+    navigate(from, { replace: true });
   };
 
   return (

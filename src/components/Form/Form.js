@@ -2,19 +2,21 @@ import React, { useState } from "react";
 import "./Form.css";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../Firebase/firebase.init";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Form = () => {
+  const { patientId } = useSelector((store) => store.patient);
+
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [bedId, setBedId] = useState("");
   const [type, setType] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  //   const [passwordError, setPasswordError] = useState("");
+
   let navigate = useNavigate();
 
-  //   const strongRegex = new RegExp(
-  //     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-  //   );
   const emailRegex = new RegExp(
     "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.]{1}[a-zA-Z]{2,}$"
   );
@@ -22,28 +24,42 @@ const Form = () => {
     useCreateUserWithEmailAndPassword(auth);
 
   const handleOnSubmit = (e) => {
-    console.log(type);
+    // console.log(type);
     e.preventDefault();
-    if (password === confirmPassword && emailRegex.test(email)) {
+    const id = patientId.find((ids) => parseInt(ids.id) === parseInt(bedId));
+    // console.log(id);
+    if (
+      password === confirmPassword &&
+      emailRegex.test(email) &&
+      id !== undefined &&
+      type === "Patient"
+    ) {
       createUserWithEmailAndPassword(email, password);
-      console.log("Registration Successful");
-      fetch("http://localhost:5000/staffs", {
+      // console.log("Registration Successful");
+
+      fetch("http://localhost:5000/patients", {
         method: "POST",
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({ type, email }),
+        body: JSON.stringify({ type, email, name, bedId }),
       })
         .then((res) => res.json())
         .then((data) => console.log(data));
-      let path = `/dashboard`;
-      navigate(path);
+    } else {
+      createUserWithEmailAndPassword(email, password);
+
+      fetch("http://localhost:5000/doctors", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ type, email, name }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
     }
-    // if (!strongRegex.test(password)) {
-    //   setPasswordError(
-    //     "Password must contain 1 uppercase,1 lowercase,1 special character and length minimum 8"
-    //   );
-    // }
+    redirect("/dashboard");
   };
 
   return (
@@ -68,7 +84,6 @@ const Form = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {/* <div className={`${errors.email ? 'pt-2 notValid' : ''}`}>{errors.email?.message}</div> */}
           </div>
           <div>
             <label htmlFor="Password">Password</label>
@@ -77,7 +92,6 @@ const Form = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {/* <div className={`${errors.password ? 'pt-2 notValid' : ''}`}>{errors.password?.message}</div> */}
           </div>
           <div>
             <label htmlFor="Password">Confirm Password</label>
@@ -86,8 +100,27 @@ const Form = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            {/* <div className={`${errors.confirmPassword ? 'pt-2 notValid' : ''}`}>{errors.confirmPassword?.message}</div> */}
           </div>
+
+          <div>
+            <label htmlFor="Name">Name</label>
+            <input
+              type="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          {type === "Patient" && (
+            <div>
+              <label htmlFor="BedId">BedId(Patient Only)</label>
+              <input
+                type="bedId"
+                value={bedId}
+                onChange={(e) => setBedId(e.target.value)}
+              />
+            </div>
+          )}
 
           <div className="type">
             <div>
@@ -135,14 +168,6 @@ const Form = () => {
               </svg>
             </div>
           )}
-
-          {/* {
-            <div>
-              <p className="font-bold text-xl pb-2 text-red-500 text-center">
-                {passwordError}
-              </p>
-            </div>
-          } */}
 
           <button className="submit-btn">Register</button>
         </form>

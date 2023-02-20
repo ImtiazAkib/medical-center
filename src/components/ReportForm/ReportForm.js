@@ -16,19 +16,19 @@ const ReportForm = () => {
   }, [user, users]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/staffs")
+    fetch("https://medical-server.onrender.com/staffs")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/reports")
+    fetch("https://medical-server.onrender.com/reports")
       .then((res) => res.json())
       .then((data) => setReports(data));
   }, []);
 
   const onSubmit = (data) => {
-    fetch(`http://localhost:5000/reports/${reports[0]._id}`, {
+    fetch(`https://medical-server.onrender.com/reports/${reports[0]._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
